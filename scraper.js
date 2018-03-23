@@ -75,9 +75,6 @@ http.get('http://shirts4mike.com/shirts.php', (res) => {
                 productDetails.price = $('.price').html();
                 productDetails.title = $('.shirt-picture img').attr('alt');
                 var d = new Date();
-                d.getHours();
-                d.getMinutes();
-                d.getSeconds();
                 productDetails.time = d.toString();
                 products.find(x => x.id === productDetails.id).price = productDetails.price;
                 products.find(x => x.id === productDetails.id).title = productDetails.title;
@@ -100,7 +97,11 @@ http.get('http://shirts4mike.com/shirts.php', (res) => {
     }
   });
 }).on('error', (e) => {
-  console.error(`Got error: ${e.message}`);
+  let messageText = 'Not sure what happened. Check your network connection.'
+  if(e.code === 'ENOTFOUND'){
+    messageText = 'Unable to connect to the network'
+  }
+  console.error(`Got error: ` + messageText );
 });
 
 function finish() {
